@@ -15,7 +15,7 @@ module.exports = {
     extensions: [ '.js', '.jsx', '.json']
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?/,
         include: SRC_DIR,
