@@ -121,7 +121,8 @@ class Notification extends Component{
     super(props);
     this.state = {
     	timer: props.lifetime,
-    	timerID: null
+    	timerID: null,
+    	ID: String(props.timestamp)+"~~"+String(props.note)
     };
     this.tick=this.tick.bind(this);
   }
@@ -131,7 +132,7 @@ class Notification extends Component{
   		return {timer: prev.timer-1};
   	});
   	if(this.state.timer<=0)
-  		this.props.end(this.props.timestamp);
+  		this.props.end(this.state.ID);
   }
 
   componentWillUnmount(){
@@ -144,7 +145,7 @@ class Notification extends Component{
 
   render(){
   	return <div> {this.props.note}
-  		<button onClick={(event)=>this.props.end(this.props.timestamp)}> 
+  		<button onClick={(event)=>this.props.end(this.state.ID)}> 
   		X </button></div>;
   }
 }
@@ -160,7 +161,6 @@ class App extends Component{
 			openChats: [],
 			loggedIn: false,
 			notifs: [],
-			curr_friend: "",
 			refs: {},
 			tabs: {}
 		};
@@ -197,7 +197,7 @@ class App extends Component{
 
 	rmvUser(msg){
 		var olduser = msg.username;
-		if(olduser == this.state.myName) return;
+		if(olduser == this.state.myName || !this.state.loggedIn) return;
 		this.setState(function(prev){
 			prev.tabs[olduser]-=1;
 			if(prev.tabs[olduser]==0){
@@ -267,7 +267,7 @@ class App extends Component{
 			} else if(mine){
 				prev.refs[friend][0].current.focus();
 			}
-			return {openChats: prev.openChats, curr_friend: friend, refs: prev.refs};
+			return {openChats: prev.openChats, refs: prev.refs};
 		});
 	}
 
@@ -282,6 +282,16 @@ class App extends Component{
 
 	logout(event){
 		var user=this.state.myName;
+		this.setState({
+			chats: {},
+			outBox: {},
+			activeUsers: [],
+			openChats: [],
+			loggedIn: false,
+			notifs: [],
+			refs: {},
+			tabs: {}
+		});
 		this.props.socket.emit('logout', {username: user});
 	}
 
@@ -289,7 +299,7 @@ class App extends Component{
 		event.preventDefault();
 		var curruser=this.state.myName;
 		if(curruser!=username){
-			this.setState({myName: username, loggedIn: false});
+			this.setState({myName: username});
 			if(this.state.loggedIn) this.logout(event);
 			if(username!="")
 				this.props.socket.emit('login', {username: username});
@@ -308,9 +318,9 @@ class App extends Component{
 		this.props.socket.emit('send message', {to: recipient, from: user, message: message});
 	}
 
-	rmvNotif(note){
+	rmvNotif(noteID){
 		this.setState(function(prev){
-			var index = prev.notifs.map(a=>a[0]).indexOf(note);
+			var index = prev.notifs.map(a=>(String(a[2])+"~~"+String(a[0]))).indexOf(noteID);
 			prev.notifs.splice(index,1);
 			return {notifs: prev.notifs};
 		});
@@ -326,7 +336,7 @@ class App extends Component{
 					</Cond>
 					<div>
 						{this.state.notifs.map(note => 
-							<Notification key={note[2]} timestamp={note[2]} note={note[0]}
+							<Notification key={String(note[2])+"~~"+String(note[0])} timestamp={note[2]} note={note[0]}
 								lifetime={note[1]} end={this.rmvNotif}/>)}
 					</div>
 					<Cond iff={this.state.loggedIn}>
