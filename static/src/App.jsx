@@ -295,6 +295,7 @@ class App extends Component{
 	}
 
 	logout(event){
+		if(!this.state.loggedIn) return;
 		var user=this.state.myName;
 		this.setState({
 			chats: {},
@@ -314,7 +315,7 @@ class App extends Component{
 		var curruser=this.state.myName;
 		if(curruser!=username){
 			this.setState({myName: username});
-			if(this.state.loggedIn) this.logout(event);
+			this.logout(event);
 			if(username!="")
 				this.props.socket.emit('login', {username: username});
 		}
