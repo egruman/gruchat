@@ -229,7 +229,9 @@ class App extends Component{
 
 				localStorage.set(key, {chat : this.state.chats[msg.from]});
 			} else {
-				var outIndex= prev.outBox[msg.to].indexOf(user+" (sending): "+msg.message);
+				var outIndex=-1;
+				if(msg.to in prev.outBox)
+					outIndex= prev.outBox[msg.to].indexOf(user+" (sending): "+msg.message);
 				if(outIndex>-1) prev.outBox[msg.to].splice(outIndex,1);
 				if(msg.to in prev.chats)
 					prev.chats[msg.to]+= "\n"+user+": "+msg.message;
