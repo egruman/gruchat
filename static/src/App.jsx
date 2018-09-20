@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Beforeunload from 'react-beforeunload';
+import localStorage from 'local-storage';
 
 function Cond(props){
 	var display = props.children;
@@ -214,6 +215,9 @@ class App extends Component{
 
 	updateMessages(msg){
 		var user=this.state.myName;
+		var ab = [msg.from, msg.to].sort();
+		var key= String(ab[0].length)+","+String(ab[1].length)+"|"+ab[0]+","+ab[1];
+
 		if((msg.to != user  && msg.from != user) || !this.state.loggedIn) return;
 		if(msg.to == user) this.chooseUser(msg.from, false);
 		if(msg.from == user) this.chooseUser(msg.to, true);
@@ -222,20 +226,28 @@ class App extends Component{
 				if(msg.from in prev.chats)
 					prev.chats[msg.from]+= "\n"+msg.from+": "+msg.message;
 				else prev.chats[msg.from]= msg.from+": "+msg.message;
+
+				localStorage.set(key, {chat : this.state.chats[msg.from]});
 			} else {
 				var outIndex= prev.outBox[msg.to].indexOf(user+" (sending): "+msg.message);
 				if(outIndex>-1) prev.outBox[msg.to].splice(outIndex,1);
 				if(msg.to in prev.chats)
 					prev.chats[msg.to]+= "\n"+user+": "+msg.message;
 				else prev.chats[msg.to]= user+": "+msg.message;
+
+				localStorage.set(key, {chat : this.state.chats[msg.to]});
 			}
 			return {chats: prev.chats, outBox: prev.outBox};
 		});
+
 	}
 
 	addNewUser(msg){
 		var app=this;
 		var newuser = msg.username, name = app.state.myName;
+		var ab = [newuser, name].sort();
+		var key= String(ab[0].length)+","+String(ab[1].length)+"|"+ab[0]+","+ab[1];
+
 		if(newuser == name){
 			app.setState(function(prev){
 				if(prev.loggedIn){
@@ -247,6 +259,8 @@ class App extends Component{
 		} else if(app.state.loggedIn) {
 			app.setState(function(prev){
 				if(!(newuser in prev.tabs)){
+					var backup = localStorage.get(key);
+					if(backup) prev.chats[newuser]=backup.chat;
 					prev.tabs[newuser]=1;
 					prev.activeUsers.push(newuser);
 					prev.notifs.push([newuser+ " has logged in", 700, new Date()]);
