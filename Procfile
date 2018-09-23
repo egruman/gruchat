@@ -1,1 +1,1 @@
-web: gunicorn -k eventlet chat-server:app
+web: flask run
