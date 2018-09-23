@@ -1,0 +1,89 @@
+.header {
+  border: solid;
+  display: inline-block;
+  width: 90%;
+}
+
+.overlay {
+  display: initial;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.notification {
+  right: 0px;
+  background-color: cyan;
+  opacity: 0.75;
+  text-align: left;
+  border-radius: 25px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: auto;
+  width: 150px;
+  font-size: 10px;
+  margin: 8px;
+}
+
+.middle {
+  height: 10px;
+  vertical-align: middle;
+}
+
+.login {
+  display:inline-block;
+  margin: 10px;
+  padding-top: 10px;
+  padding-left: 50px;
+  text-align: left;
+}
+
+.picker {
+  vertical-align: middle;
+  margin-top: 10px;
+  padding-top: 10px;
+  right: 20px;
+  text-align: right;
+  display: flex;
+}
+
+.chat {
+  height:260px;
+  overflow-y: scroll;
+}
+
+.close {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.close2 {
+  right: 15px;
+  top: 15px;
+}
+
+.sendbox {
+  width: 100%;
+}
+
+.load {
+  margin: auto;
+  width: 70%;
+  height: 40px;
+  right: 50px;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+  margin: auto;
+}
+
+.chatDisplay {
+  float: left;
+  display: flex;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+}

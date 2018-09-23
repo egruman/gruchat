@@ -12,7 +12,7 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   resolve: {
-    extensions: [ '.js', '.jsx', '.json']
+    extensions: [ '.js', '.jsx', '.json', '.css']
   },
   module: {
     rules: [
@@ -20,6 +20,17 @@ module.exports = {
         test: /\.jsx?/,
         include: SRC_DIR,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader'
+      }, {
+        test: /\.css$/,
+        loader: 'css-loader',
+        query: {
+          modules: true,
+          localIdentName: '[name]__[local]___[hash:base64:5]'
+        }
       }
     ]
   }
