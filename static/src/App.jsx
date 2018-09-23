@@ -4,7 +4,6 @@ import localStorage from 'local-storage';
 
 import styles from './css/style.css';
 import { Container, Row, Col, Button, Dropdown, DropdownButton, Card} from 'react-bootstrap';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 function Cond(props){
 	var display = props.children;
