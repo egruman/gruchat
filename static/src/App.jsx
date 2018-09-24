@@ -422,7 +422,6 @@ class App extends Component{
 		var user=this.state.myName;
 		return (<Beforeunload onBeforeunload={this.logout}><div>
 					<Cond iff={this.state.loggedIn}><h2> Welcome, {user}!</h2></Cond>
-					<p>Location object {JSON.stringify(location)}; {JSON.stringify(Location)} </p>
 					<Container className={styles.header}><Row>
 						<Col md={7}><LoginForm login={this.login} user={user} loggedIn={this.state.loggedIn}/>
 						</Col>
