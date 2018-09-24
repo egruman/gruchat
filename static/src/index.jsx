@@ -5,6 +5,7 @@ import App from './App.jsx'
 import openSocket from 'socket.io-client';
 import 'bootstrap';
 
+console.log(location);
 var port=5000;
 if(location.port) port=location.port;
 
