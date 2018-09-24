@@ -5,6 +5,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room
 
 app = Flask(__name__)
 
+app.debug = False
 key= "123"
 if ('SECRET_KEY' in os.environ):
   key = os.environ['SECRET_KEY']
