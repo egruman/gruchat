@@ -6,7 +6,7 @@ import openSocket from 'socket.io-client';
 import 'bootstrap';
 
 var port=5000;
-if(process.env.PORT) port=process.env.PORT;
+if(location.port) port=location.port;
 
 var host='//'+document.domain+':'+port;
 const socket = openSocket(host);
