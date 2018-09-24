@@ -1,6 +1,6 @@
 
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 
 app = Flask(__name__)
@@ -17,6 +17,13 @@ socketio = SocketIO(app)
 def index():
     return render_template('index.html')
 
+@app.route('/getport')
+def port():
+    port = 5000
+    if 'PORT' in os.environ:
+        port = os.environ['PORT']
+    return make_response(jsonify({'port': port}))
+    
 @socketio.on('connect')
 def test_connect():
     print('Connected')
