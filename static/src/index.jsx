@@ -5,8 +5,12 @@ import App from './App.jsx'
 import openSocket from 'socket.io-client';
 import 'bootstrap';
 
+var port=5000;
+if(document.port) port=document.port;
 
-const socket = openSocket('//'+document.domain+':'+document.port);
+var host='//'+document.domain+':'+port;
+console.log(host);
+const socket = openSocket(host);
 
 $(document).ready(()=>{
 ReactDOM.render(<App socket={socket} />, 
