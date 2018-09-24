@@ -8,5 +8,7 @@ import 'bootstrap';
 
 const socket = openSocket('//'+document.domain+':'+document.port);
 
+$(document).ready(()=>{
 ReactDOM.render(<App socket={socket} />, 
 	document.getElementById('root'));
+});
