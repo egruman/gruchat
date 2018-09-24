@@ -8,7 +8,6 @@ import 'bootstrap';
 var port=5000;
 
 $(document).ready(()=>{
-console.log(location);
 if(location.port) port=location.port;
 var host='//'+document.domain+':'+port;
 const socket = openSocket(host);
