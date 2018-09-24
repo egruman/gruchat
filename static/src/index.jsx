@@ -6,9 +6,7 @@ import openSocket from 'socket.io-client';
 import 'bootstrap';
 
 
-const socket = openSocket('http://'+document.domain+':'+document.port);
+const socket = openSocket('//'+document.domain+':'+document.port);
 
-$(document).ready(()=>{
 ReactDOM.render(<App socket={socket} />, 
 	document.getElementById('root'));
-});
