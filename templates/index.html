@@ -17,13 +17,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- Socket IO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"> </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='transpiled/index.bundle.js') }}"></script>
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <h1>Chat Server</h1>
-    <script type="text/javascript" src="{{ url_for('static', filename='transpiled/index.bundle.js') }}"></script>
+    
     <div id="root"></div>
     <!--
       This HTML file is a template.
