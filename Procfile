@@ -1,1 +1,1 @@
-web: gunicorn -k eventlet chat-server:app
+web: gunicorn -k eventlet server:app
