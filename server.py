@@ -22,6 +22,7 @@ def port():
     port = 5000
     if 'PORT' in os.environ:
         port = os.environ['PORT']
+    print('Port'+str(port))
     return make_response(jsonify({'port': port}))
     
 @socketio.on('connect')

@@ -250,7 +250,6 @@ class App extends Component{
 	}
 
 	componentDidMount(){
-		console.log(location);
 		this.props.socket.on('login response', this.addNewUser);
 		this.props.socket.on('welcome response', this.addCurrUser);
 		this.props.socket.on('recieve message', this.updateMessages);

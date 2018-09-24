@@ -9,7 +9,7 @@ $(document).ready(()=>{
 fetch('/getport').then(res => res.json()).then(function (res) {
 		var host='//'+document.domain+':'+res.port;
 		const socket = openSocket(host);
-
+		console.log("port:"+res.port);
 		ReactDOM.render(<App socket={socket} />, 
 			document.getElementById('root'));
 	});
