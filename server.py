@@ -1,11 +1,19 @@
+
+import os
+import logging
+import redis
+import gevent
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
-import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "123"
-socketio = SocketIO(app)
 
+key= "123"
+if ('SECRET_KEY' in os.environ):
+  key = os.environ['SECRET_KEY']
+
+app.config['SECRET_KEY'] = key
+socketio = SocketIO(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
