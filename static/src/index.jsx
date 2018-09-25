@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom';
 import * as $ from 'jquery';
 import App from './App.jsx';
 import 'bootstrap';
-import openSocket from 'socket.io-client';
+import io from 'socket.io-client';
 
 $(document).ready(()=>{
 	var port="";
-	console.log(document.domain);
 	if(document.domain=='localhost') port=":5000";
 	var host='//'+document.domain+port;
-	const socket = openSocket(host);
+	const socket = io.connect(host);
 	ReactDOM.render(<App socket={socket} />, 
 		document.getElementById('root'));
 });
