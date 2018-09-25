@@ -50,6 +50,7 @@
 .chat {
   height:260px;
   overflow-y: scroll;
+  border-bottom: 1px solid lightgrey;
 }
 
 .close {
