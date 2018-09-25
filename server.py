@@ -21,7 +21,7 @@ def index():
 def port():
     port = 5000
     if 'PORT' in os.environ:
-        port = os.environ['PORT']
+        port = ""
     print('Domain: '+str(url_for('index'))+', Port: '+str(port))
     return make_response(jsonify({'port': port, 'domain': url_for('index')}))
     
