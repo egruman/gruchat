@@ -17,13 +17,6 @@ socketio = SocketIO(app)
 def index():
     return render_template('index.html')
 
-@app.route('/getport')
-def port():
-    port =":5000"
-    if('PORT' in os.environ):
-        port = ":"+str(os.environ['PORT'])
-    return make_response(jsonify({'port': port}))
-
 @socketio.on('connect')
 def test_connect():
     print('Connected')
