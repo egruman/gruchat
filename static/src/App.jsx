@@ -14,15 +14,6 @@ function Cond(props){
 	return display;
 }
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
-
 //lets user log in with a username
 class LoginForm extends Component{
 	constructor(props){
@@ -471,7 +462,6 @@ class App extends Component{
 		var curruser=this.state.myName;
 		if(curruser!=username){
 			this.logout(event);
-			sleep(1000);
 			this.setState({myName: username});
 			if(username!="")
 				this.props.socket.emit('login', {username: username});
