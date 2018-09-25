@@ -9,7 +9,7 @@ $(document).ready(()=>{
 	var port="";
 	if(document.domain=='localhost') port=":5000";
 	var host='//'+document.domain+port+'/chat';
-	const socket = io.connect(host, {secure: true, transports: ['websocket', 'polling'], pingInterval: 40000, pingTimeout: 25000});
+	const socket = io.connect(host, {secure: true, transports: ['websocket', 'polling']});
 	ReactDOM.render(<App socket={socket} />, 
 		document.getElementById('root'));
 });
