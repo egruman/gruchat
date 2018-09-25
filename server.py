@@ -1,6 +1,6 @@
 
 import os
-from flask import Flask, render_template, request, make_response, jsonify
+from flask import Flask, render_template, request, make_response, jsonify, url_for
 from flask_socketio import SocketIO, emit, join_room, leave_room
 
 app = Flask(__name__)
@@ -22,8 +22,8 @@ def port():
     port = 5000
     if 'PORT' in os.environ:
         port = os.environ['PORT']
-    print('Port'+str(port))
-    return make_response(jsonify({'port': port}))
+    print('Domain: '+str(url_for('index'))+', Port: '+str(port))
+    return make_response(jsonify({'port': port, 'domain': url_for('index')}))
     
 @socketio.on('connect')
 def test_connect():
