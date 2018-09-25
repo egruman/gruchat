@@ -6,10 +6,10 @@ import 'bootstrap';
 import io from 'socket.io-client';
 
 $(document).ready(()=>{
-	var port="";
-	if(document.domain=='localhost') port=":5000";
-	var host='//'+document.domain+port;
-	const socket = io.connect(host, {secure: true});
-	ReactDOM.render(<App socket={socket} />, 
-		document.getElementById('root'));
+	fetch('/getport').then(res=>res.json()).then(function(res){
+		var host='//'+document.domain+res.port;
+		const socket = io.connect(host, {secure: true});
+		ReactDOM.render(<App socket={socket} />, 
+			document.getElementById('root'));
+	});
 });
