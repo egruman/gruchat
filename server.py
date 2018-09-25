@@ -19,7 +19,7 @@ def index():
 
 @app.route('/getport')
 def port():
-    port = 5000
+    port = ":5000"
     if 'PORT' in os.environ:
         port = ""
     print('Domain: '+str(url_for('index'))+', Port: '+str(port))

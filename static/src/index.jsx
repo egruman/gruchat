@@ -7,7 +7,7 @@ import openSocket from 'socket.io-client';
 
 $(document).ready(()=>{
 fetch('/getport').then(res => res.json()).then(function (res) {
-		var host='https://'+document.domain+':'+res.port;
+		var host='https://'+document.domain+res.port;
 		const socket = openSocket(host);
 		ReactDOM.render(<App socket={socket} />, 
 			document.getElementById('root'));
