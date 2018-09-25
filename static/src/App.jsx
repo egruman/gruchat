@@ -464,8 +464,31 @@ class App extends Component{
 		if(curruser!=username){
 			this.logout(event);
 			this.setState({myName: username});
-			if(username!="")
+			if(username!=""){
 				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+
+				this.props.socket.emit('login', {username: username});
+			}
 		}
 	}
 
