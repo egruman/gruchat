@@ -388,7 +388,6 @@ class App extends Component{
 	addNewUser(msg){
 		var app=this;
 		var newuser = msg.username, name = app.state.myName;
-		console.log(JSON.stringify(msg));
 		var ab = [newuser, name].sort();
 		var key= String(ab[0].length)+","+String(ab[1].length)+"|"+ab[0]+","+ab[1];
 
