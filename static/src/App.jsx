@@ -177,7 +177,9 @@ class ChatModule extends Component{
 				hour-=12;
 				m="PM";
 			}
-			date=hour+":"+d.getSeconds()+" "+m+", "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear();
+			var min = d.getMinutes();
+			if(min<10) min="0"+String(min);
+			date=hour+":"+min+" "+m+", "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear();
 			dat="block";
 		}
 		
