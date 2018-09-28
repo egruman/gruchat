@@ -172,14 +172,13 @@ class ChatModule extends Component{
 			if(hour==0){
 				hour=12;
 				m="PM";
-			}
-			else if(hour>12){
+			} else if(hour>12){
 				hour-=12;
 				m="PM";
 			}
-			var min = d.getMinutes();
-			if(min<10) min="0"+String(min);
-			date=hour+":"+min+" "+m+", "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear();
+			var mins = d.getMinutes();
+			if(mins<10) min="0"+String(mins);
+			date=hour+":"+mins+" "+m+", "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear();
 			dat="block";
 		}
 		
@@ -233,8 +232,6 @@ class Notification extends Component{
 	    	on: false
 	    };
 	    this.tick=this.tick.bind(this);
-	    this.onMouseEnter=this.onMouseEnter.bind(this);
-	    this.onMouseLeave=this.onMouseLeave.bind(this);
 	}
 
 	//counts down the notification's lifetime
@@ -255,25 +252,11 @@ class Notification extends Component{
 		this.setState({timerID: setInterval(this.tick, 1)});
 	}
 
-	//focus notification when mouse is over
-	onMouseEnter(){
-		var app =this;
-		app.setState(function(prev){
-			return {timer: app.props.lifetime, on: true}; 
-		});
-	}
-
-	//unfocus notification when mouse leaves
-	onMouseLeave(){;
-		this.setState(function(prev){
-			return {on: false}; 
-		});
-	}
-
 	render(){
 		var opacity= Math.min(this.state.timer, 120.0)/200.0;
 		if(this.state.on) opacity=0.8;
-		return <a onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+		return <a onMouseEnter={(event)=>this.setState({timer: this.props.lifetime, on: true})}
+					onMouseLeave={(event)=>this.setState({on: false})}>
 			<Container className={styles.notification} style={{opacity: opacity}}>
 				<div className={styles.middle}/>
 				<div style={{display: 'flex'}}><Button style={{marginRight: "8px"}} 

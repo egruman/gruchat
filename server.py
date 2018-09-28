@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 app.debug = False
 key= "123"
-if ('SECRET_KEY' in os.environ):
-  key = os.environ['SECRET_KEY']
+# if ('SECRET_KEY' in os.environ):
+#   key = os.environ['SECRET_KEY']
 
 app.config['SECRET_KEY'] = key
 socketio = SocketIO(app)
