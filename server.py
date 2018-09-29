@@ -24,7 +24,7 @@ def index():
 
 @socketio.on('connect', namespace='/chat')
 def test_connect():
-    print('Connected to server# '+str(serverID)))
+    print('Connected to server# '+str(serverID))
 
 @socketio.on('login', namespace='/chat')
 def send_back_login(msg):
