@@ -1,8 +1,7 @@
 
 import os
-import random
-import sys
-from flask import Flask, render_template, request, make_response, jsonify, url_for
+
+from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
@@ -15,8 +14,7 @@ if ('SECRET_KEY' in os.environ):
 app.config['SECRET_KEY'] = key
 socketio = SocketIO(app)
 
-serverID=random.randrange(1000000)
-print('server '+str(serverID)+' started')
+print('Server started')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -24,7 +22,7 @@ def index():
 
 @socketio.on('connect', namespace='/chat')
 def test_connect():
-    print('Connected to server# '+str(serverID))
+    print('Connected')
 
 @socketio.on('login', namespace='/chat')
 def send_back_login(msg):

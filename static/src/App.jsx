@@ -86,17 +86,17 @@ class ChatModule extends Component{
 	constructor(props){
 		super(props);
 		this.displaySize=20;
-		var len =0, len2=0;
+		var chatlen =0, pendlen=0;
 		this.ini
 		if(props.chat)
-			len = props.chat.length;
+			chatlen = props.chat.length;
 		if(props.pending)
-			len2 = props.pending.length;
+			pendlen = props.pending.length;
 		this.state={
 			value: "",
-			start: Math.max(len-this.displaySize,0),
-			chatsize: len,
-			pendingsize: len2,
+			start: Math.max(chatlen-this.displaySize,0),
+			chatsize: chatlen,
+			pendingsize: pendlen,
 			hasMounted: false, 
 			showdate: -1,
 			target: null,
@@ -197,12 +197,12 @@ class ChatModule extends Component{
 		} 
 		if(app.state.over) displayname="";
 		
-		return (<div style={{ 'width': '18rem', 'marginRight': '20px',  }}>
+		return (<div style={{ 'width': '18rem', 'marginRight': '20px' }}>
 				<div style={{'height': '66px'}}>
 				<Alert style={{'display': dat, 'text-align': 'center'}} variant={'primary'} >
 					Sent on {date}</Alert>
 				</div>
-				<Card style={{ 'width': '18rem'}}>
+				<Card style={{ 'width': '18rem', 'pointerEvents': 'auto'}} >
 				<Card.Header style={{ 'display': 'flex'}}><OverflowDetector
 					 style={{ 'height': '3rem', 'width': '80%', 'overflow': 'hidden', 'white-space': 'nowrap'}} 
 				onOverflowChange={(event)=>app.setState(function(prev){
@@ -501,7 +501,7 @@ class App extends Component{
 	render(){
 		var user=this.state.myName;
 		return (<Beforeunload onBeforeunload={this.logout}><div>
-					<Cond iff={this.state.loggedIn}><h2> Welcome, {user}!</h2></Cond>
+					<Cond iff={this.state.loggedIn}><div style={{'margin':'25px'}}><h2> Welcome, {user}!</h2></div></Cond>
 					<Container className={styles.header}><Row>
 						<Col md={7}><LoginForm login={this.login} user={user} 
 							loggedIn={this.state.loggedIn}/>
@@ -518,7 +518,7 @@ class App extends Component{
 					</div>
 					<Cond iff={this.state.loggedIn}>
 						<div className={styles.chatDisplay}>{this.state.openChats.map((name) => 
-							<div key={name}><ChatModule user={name} chat={this.state.chats[name]} 
+							<div key={name} ><ChatModule user={name} chat={this.state.chats[name]} 
 								myname={user} textref={this.state.refs[name]} 
 								closeChat={this.closeChat} sendMessage={this.sendMessage} 
 								pending={this.state.outBox[name]}/></div>)}
