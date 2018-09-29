@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Beforeunload from 'react-beforeunload';
 import localStorage from 'local-storage';
+import { OverflowDetector } from 'react-overflow';
 
 import styles from './css/style.css';
 import { Container, Row, Col, Button, Dropdown, 
@@ -23,11 +24,14 @@ class LoginForm extends Component{
 		};
 		this.handleChange=this.handleChange.bind(this);
 		this.resetText=this.resetText.bind(this);
+		this.maxLength =40;
 	}
 
 	handleChange(event){
-		this.setState({
-			value: event.target.value
+		var app=this, val=event.target.value;
+		app.setState(function(prev){
+			if(val.length> app.maxLength) return {};
+			return {value: val};
 		});
 	}
 
@@ -81,19 +85,23 @@ class UserPicker extends Component{
 class ChatModule extends Component{
 	constructor(props){
 		super(props);
+		this.displaySize=20;
 		var len =0, len2=0;
+		this.ini
 		if(props.chat)
 			len = props.chat.length;
 		if(props.pending)
 			len2 = props.pending.length;
 		this.state={
 			value: "",
-			start: Math.max(len-20,0),
+			start: Math.max(len-this.displaySize,0),
 			chatsize: len,
 			pendingsize: len2,
 			hasMounted: false, 
 			showdate: -1,
-			target: null
+			target: null,
+			trun: 0,
+			over: false
 		};
 		this.handleChange=this.handleChange.bind(this);
 		this.handleSend=this.handleSend.bind(this);
@@ -110,8 +118,9 @@ class ChatModule extends Component{
 
 	//loads more messages from the chat history
 	loadMore(event){
-		this.setState(function(prev){
-			return {start: Math.max(prev.start-20,0)};
+		var app =this;
+		app.setState(function(prev){
+			return {start: Math.max(prev.start-app.displaySize,0)};
 		});
 	}
 
@@ -177,10 +186,16 @@ class ChatModule extends Component{
 				m="PM";
 			}
 			var mins = d.getMinutes();
-			if(mins<10) min="0"+String(mins);
+			if(mins<10) mins="0"+String(mins);
 			date=hour+":"+mins+" "+m+", "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear();
 			dat="block";
 		}
+		var elipsis= null, displayname= app.props.user;
+		if(app.state.trun>0){
+			elipsis= <div style={{'font-size': '30px'}}><i>...</i></div>;
+			displayname = displayname.slice(0, displayname.length-app.state.trun);
+		} 
+		if(app.state.over) displayname="";
 		
 		return (<div style={{ 'width': '18rem', 'marginRight': '20px',  }}>
 				<div style={{'height': '66px'}}>
@@ -188,9 +203,15 @@ class ChatModule extends Component{
 					Sent on {date}</Alert>
 				</div>
 				<Card style={{ 'width': '18rem'}}>
-				<Card.Header><h3>{app.props.user} </h3>
+				<Card.Header style={{ 'display': 'flex'}}><OverflowDetector
+					 style={{ 'height': '3rem', 'width': '80%', 'overflow': 'hidden', 'white-space': 'nowrap'}} 
+				onOverflowChange={(event)=>app.setState(function(prev){
+					if(prev.over) return {trun: prev.trun+1, over: false};
+					return {over: true};})}><h3>{displayname} </h3>
+				</OverflowDetector> {elipsis}
 				<Button className={styles.close} onClick={(event)=>
 					props.closeChat(props.user)}> X </Button></Card.Header>
+
 					<div className={styles.chat}>
 					<Cond iff={app.state.start>0}><div className={styles.center}>
 					<Button className={styles.load} onClick={app.loadMore}> 
@@ -205,7 +226,7 @@ class ChatModule extends Component{
 						return (<a key={key} onMouseEnter={event=>app.setState({showdate: ind})} 
 									onMouseLeave={event=>app.setState({showdate: -1})}>
 								<div style={{display: 'flex', 'background-color': color}}>
-								 <div style={{marginRight: '8px', marginLeft: '2px'}}>
+								 <div style={{'marginRight': '8px', 'marginLeft': '2px', 'max-width': '8rem'}}>
 									<b>{from}:</b></div> <div>{msg.message.split('\n').map(m=><div>{m}<br/></div>)}</div>
 									</div></a>);
 					})}

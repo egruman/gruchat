@@ -8,4 +8,4 @@ Werkzeug==0.14.1
 eventlet
 gevent
 gevent-websocket
-gunicorn==18.0.0
+gunicorn==19.9.0

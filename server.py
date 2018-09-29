@@ -11,13 +11,12 @@ app.debug = False
 key= "123"
 if ('SECRET_KEY' in os.environ):
     key = os.environ['SECRET_KEY']
-# else:
-#     sys.exit()
 
 app.config['SECRET_KEY'] = key
 socketio = SocketIO(app)
 
 serverID=random.randrange(1000000)
+print('server '+str(serverID)+' started')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -25,8 +24,7 @@ def index():
 
 @socketio.on('connect', namespace='/chat')
 def test_connect():
-    print('server# '+str(serverID))
-    print('Connected')
+    print('Connected to server# '+str(serverID)))
 
 @socketio.on('login', namespace='/chat')
 def send_back_login(msg):
