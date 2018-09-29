@@ -2,7 +2,7 @@
 import os
 import sys
 from flask import Flask, render_template, request, make_response, jsonify, url_for
-from flask_socketio import SocketIO, emit, join_room, leave_room
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 
@@ -16,12 +16,16 @@ if ('SECRET_KEY' in os.environ):
 app.config['SECRET_KEY'] = key
 socketio = SocketIO(app)
 
+clients=[]
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
 
 @socketio.on('connect', namespace='/chat')
 def test_connect():
+    clients.append(request.namespace)
+    print(clients)
     print('Connected')
 
 @socketio.on('login', namespace='/chat')
