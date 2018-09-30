@@ -108,11 +108,14 @@ class ChatModule extends Component{
 		this.loadMore=this.loadMore.bind(this);
 		this.chatbottom=null;
 		this.onEnterPress=this.onEnterPress.bind(this);
+		this. maxLength = 1000;
 	}
 
 	handleChange(event){
-		this.setState({
-			value: event.target.value
+		var app=this, val=event.target.value;
+		app.setState(function(prev){
+			if(val.length> app.maxLength) return {};
+			return {value: val};
 		});
 	}
 
